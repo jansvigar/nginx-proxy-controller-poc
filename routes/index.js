@@ -17,7 +17,7 @@ const getProxies = async () => {
     proxies = found[1];
   }
 
-  const locationRegex = /location\s*([=\^\~\* ]*\/\S*)\s*\{\s*proxy_pass\s*(\S+)[^\}]*\}/gi;
+  const locationRegex = /location\s*([=\^\~\* ]*\/\S*)\s*\{\s*proxy_pass\s*(\S+);[^\}]*\}/gi;
   let matched;
   const locations = [];
   while ((matched = locationRegex.exec(proxies))) {
@@ -47,7 +47,7 @@ router.post("/", async (req, res) => {
   );
   const regexToReplace = /# start proxies-list([\s\S]*)# end proxies-list/i;
   const text = req.body.locations.map((location) => {
-    return `\t\tlocation ${location.path} {\n\t\t\tproxy_pass\t${location.proxyUrl}\n\t\t}`;
+    return `\t\tlocation ${location.path} {\n\t\t\tproxy_pass\t${location.proxyUrl};\n\t\t}`;
   });
   const replacementText = `# start proxies-list\n${text.join(
     "\n\n"
