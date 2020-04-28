@@ -2,4 +2,20 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  form(method='POST' action='/')
+    table
+      thead
+        tr
+          th index
+          th path
+          th url
+      tbody
+        each location, index in locations
+          tr
+            td #{index}
+            td 
+              input(type='text', name='locations[' + index + '][path]', value=location.path) 
+            td
+              input(type='text', name='locations[' + index + '][proxyUrl]', value=location.proxyUrl, size='50')
+    button(type='submit') Save
+    
