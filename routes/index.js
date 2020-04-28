@@ -1,4 +1,5 @@
 var path = require("path");
+const { exec } = require("child_process");
 var fs = require("fs").promises;
 var express = require("express");
 var router = express.Router();
@@ -53,6 +54,7 @@ router.post("/", async (req, res) => {
   )}\n\t\t# end proxies-list`;
   const newText = fileContent.replace(regexToReplace, replacementText);
   await fs.writeFile(path.join("/etc/nginx/nginx.conf"), newText, "utf8");
+  exec("systemctl restart nginx");
   res.send("success!");
 });
 
